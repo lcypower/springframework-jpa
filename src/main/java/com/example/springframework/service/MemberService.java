@@ -2,9 +2,11 @@ package com.example.springframework.service;
 
 import com.example.springframework.dto.MemberDTO;
 import com.example.springframework.entity.Member;
+import com.example.springframework.entity.Team;
 import com.example.springframework.exception.CustomException;
 import com.example.springframework.exception.Errors;
 import com.example.springframework.repository.MemberRepository;
+import com.example.springframework.repository.TeamRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,17 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private TeamRepository teamRepository;
+
     public List<MemberDTO.memberResponse> getMembers() {
         return this.memberRepository.findAll().stream().map(MemberDTO.memberResponse::from).collect(Collectors.toList());
     }
+
+    public List<MemberDTO.teamResponse> getTeams() {
+        return this.teamRepository.findAll().stream().map(MemberDTO.teamResponse::from).collect(Collectors.toList());
+    }
+
 
     public MemberDTO.memberResponse getMember(Long id) {
         return this.memberRepository.findById(id).map(MemberDTO.memberResponse::from).orElseThrow(() -> new CustomException(Errors.INTERNAL_SERVER_ERROR));

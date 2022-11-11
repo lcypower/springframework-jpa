@@ -18,6 +18,11 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @GetMapping("/v1/teams")
+    public ResponseEntity<Object> getTeams(){
+        return ResponseEntity.ok(this.memberService.getTeams());
+    }
+
     @GetMapping("/v1/members")
     public ResponseEntity<Object> getMembers(){
         return ResponseEntity.ok(this.memberService.getMembers());
