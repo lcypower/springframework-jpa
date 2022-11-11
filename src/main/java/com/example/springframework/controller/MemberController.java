@@ -34,16 +34,14 @@ public class MemberController {
         return ResponseEntity.created(URI.create("/v1/member/" + response.getId())).build();
     }
 
-    @PutMapping("/v1/member")
-    public ResponseEntity<Object> putMain(){
-        return new ResponseEntity(HttpStatus.OK);
+    @PatchMapping("/v1/member")
+    public ResponseEntity<Object> patchMain(@RequestBody MemberDTO.memberRequest param) {
+        return new ResponseEntity(this.memberService.patchMember(param), HttpStatus.OK);
     }
 
-    @PatchMapping("/v1/member")
-    public ResponseEntity<Object> patchMain() { return new ResponseEntity(HttpStatus.OK); }
-
     @DeleteMapping("/v1/member")
-    public ResponseEntity<Object> deleteMain(){
+    public ResponseEntity<Object> deleteMain(@ModelAttribute MemberDTO.memberRequest param){
+        this.memberService.deleteMember(param);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

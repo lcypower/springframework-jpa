@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +37,22 @@ public class MemberService {
         response.setId(member.getId());
         response.setName(member.getName());
         return response;
+    }
+
+    public MemberDTO.memberResponse patchMember(MemberDTO.memberRequest param) {
+        Member member = this.memberRepository.findById(param.getId()).orElseThrow(()-> new CustomException(Errors.INTERNAL_SERVER_ERROR));
+        member.setName(param.getName());
+        this.memberRepository.save(member);
+
+        MemberDTO.memberResponse response = new MemberDTO.memberResponse();
+        response.setId(member.getId());
+        response.setName(member.getName());
+        return response;
+    }
+
+    public void deleteMember(MemberDTO.memberRequest param) {
+        Member member = this.memberRepository.findById(param.getId()).orElseThrow(()-> new CustomException(Errors.INTERNAL_SERVER_ERROR));
+        this.memberRepository.delete(member);
     }
 
 
