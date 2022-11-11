@@ -36,13 +36,15 @@ public class MemberDTO {
     public static class teamResponse {
         private Long id;
         private String name;
-        private List<Member> members;
+        private List<Member> del;
+        private List<Member> notdel;
 
         public static teamResponse from(Team team) {
             teamResponse rtn = new teamResponse();
             rtn.setId(team.getId());
             rtn.setName(team.getName());
-            rtn.setMembers(team.getMembers());
+            rtn.setDel(team.getMembersdel());
+            rtn.setNotdel(team.getMembersnotdel());
             return rtn;
         }
     }

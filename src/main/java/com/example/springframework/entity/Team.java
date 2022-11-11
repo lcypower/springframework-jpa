@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +27,20 @@ public class Team {
     @OneToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name="teamId", referencedColumnName="id")
-    private List<Member> members = new ArrayList<>();
+    @OrderBy("id DESC")
+    @Where(clause="deleteAt=0")
+    private List<Member> membersnotdel = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name="teamId", referencedColumnName="id")
+    @OrderBy("id DESC")
+    @Where(clause="deleteAt=1")
+    private List<Member> membersdel = new ArrayList<>();
+
+
+
+
+
 
 }
